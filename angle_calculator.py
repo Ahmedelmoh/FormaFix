@@ -19,4 +19,4 @@ def calculate_angle(a, b, c):
     if angle > 180.0:
         angle = 360 - angle
     
-    return round(angle, 2)
+    return round(angle, 30)
