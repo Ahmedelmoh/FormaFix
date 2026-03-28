@@ -14,15 +14,15 @@ from datetime import datetime
 from collections import deque
 
 from angle_calculator import get_all_angles
-from rep_counter      import RepCounter
-from form_evaluator   import FormEvaluator
-from feedback_engine  import FeedbackEngine
-from audio_feedback   import AudioFeedback
+from rep_counter import RepCounter
+from form_evaluator import FormEvaluator
+from feedback_engine import FeedbackEngine
+from audio_feedback import AudioFeedback
 
-BaseOptions           = mp.tasks.BaseOptions
-PoseLandmarker        = mp.tasks.vision.PoseLandmarker
+BaseOptions = mp.tasks.BaseOptions
+PoseLandmarker = mp.tasks.vision.PoseLandmarker
 PoseLandmarkerOptions = mp.tasks.vision.PoseLandmarkerOptions
-VisionRunningMode     = mp.tasks.vision.RunningMode
+VisionRunningMode = mp.tasks.vision.RunningMode
 
 CONNECTIONS = [
     (11,12),(11,13),(13,15),(12,14),(14,16),
@@ -31,31 +31,31 @@ CONNECTIONS = [
 ]
 
 EXERCISE_JOINT = {
-    'straight_leg_raise':      'left_hip',
-    'terminal_knee_extension': 'left_knee',
-    'mini_squat':              'left_knee',
-    'hamstring_curl':          'left_knee',
-    'pendulum':                'left_shoulder',
-    'external_rotation':       'left_elbow',
-    'wall_slide':              'left_shoulder',
-    'shoulder_abduction':      'left_shoulder',
-    'bicep_curl':              'left_elbow',
-    'squat':                   'left_knee',
-    'shoulder_raise':          'left_shoulder',
+    'straight_leg_raise':'left_hip',
+    'terminal_knee_extension':'left_knee',
+    'mini_squat':'left_knee',
+    'hamstring_curl':'left_knee',
+    'pendulum':'left_shoulder',
+    'external_rotation':'left_elbow',
+    'wall_slide':'left_shoulder',
+    'shoulder_abduction':'left_shoulder',
+    'bicep_curl':'left_elbow',
+    'squat':'left_knee',
+    'shoulder_raise':'left_shoulder',
 }
 
 EXERCISE_THRESHOLDS = {
-    'straight_leg_raise':      {'up': 160, 'down': 70},
+    'straight_leg_raise': {'up': 160, 'down': 70},
     'terminal_knee_extension': {'up': 155, 'down': 50},
-    'mini_squat':              {'up': 150, 'down': 115},
-    'hamstring_curl':          {'up': 155, 'down': 95},
-    'pendulum':                {'up': 25,  'down': 5},
-    'external_rotation':       {'up': 85,  'down': 60},
-    'wall_slide':              {'up': 145, 'down': 65},
-    'shoulder_abduction':      {'up': 75,  'down': 15},
-    'bicep_curl':              {'up': 160, 'down': 40},
-    'squat':                   {'up': 160, 'down': 80},
-    'shoulder_raise':          {'up': 85,  'down': 20},
+    'mini_squat': {'up': 150, 'down': 115},
+    'hamstring_curl': {'up': 155, 'down': 95},
+    'pendulum':{'up': 25,  'down': 5},
+    'external_rotation': {'up': 85,  'down': 60},
+    'wall_slide':{'up': 145, 'down': 65},
+    'shoulder_abduction':{'up': 75,  'down': 15},
+    'bicep_curl':{'up': 160, 'down': 40},
+    'squat':{'up': 160, 'down': 80},
+    'shoulder_raise':{'up': 85,  'down': 20},
 }
 
 
