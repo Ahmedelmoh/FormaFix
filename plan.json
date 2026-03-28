@@ -1,0 +1,444 @@
+{
+  "patient": {
+    "name": "patient",
+    "age": null,
+    "injury": "ACL injury, right knee",
+    "injury_date": "3 months ago",
+    "surgery": true,
+    "surgery_date": "5 weeks ago",
+    "pain_level": 5,
+    "mobility": "limited",
+    "previous_treatment": "Physical therapy sessions since surgery",
+    "goal": "Return to playing football",
+    "notes": "Patient is 5 weeks post-op ACL surgery on the right knee. Pain level 5/10. Has previous PT experience. Focus on graft protection and progressive strengthening for return to sport."
+  },
+  "plan": {
+    "total_weeks": 4,
+    "phase": "early_recovery",
+    "phase_description": "This initial phase (weeks 5-9 post-op) focuses on reducing pain and swelling, restoring full knee extension and improving flexion, and beginning gentle strengthening of the quadriceps and hamstrings to protect the new graft. We'll gradually build strength and prepare for more advanced movements.",
+    "weeks": [
+      {
+        "week": 1,
+        "focus": "Restoring full extension, gentle quad activation, pain management",
+        "days": [
+          {
+            "day": 1,
+            "exercises": [
+              {
+                "name": "straight_leg_raise",
+                "sets": 3,
+                "reps": 10,
+                "rest_seconds": 60,
+                "notes": "Perform slowly, focusing on engaging the quad. Keep the knee straight."
+              },
+              {
+                "name": "terminal_knee_extension",
+                "sets": 3,
+                "reps": 10,
+                "rest_seconds": 60,
+                "notes": "Use a rolled towel or foam roller under the ankle to allow the heel to hang and achieve full extension. Gently press the knee down."
+              }
+            ]
+          },
+          {
+            "day": 2,
+            "exercises": []
+          },
+          {
+            "day": 3,
+            "exercises": [
+              {
+                "name": "straight_leg_raise",
+                "sets": 3,
+                "reps": 10,
+                "rest_seconds": 60,
+                "notes": "Ensure no pain during movement. If pain increases, reduce range or stop."
+              },
+              {
+                "name": "terminal_knee_extension",
+                "sets": 3,
+                "reps": 10,
+                "rest_seconds": 60,
+                "notes": "Hold the full extension for 3-5 seconds at the end of each rep."
+              }
+            ]
+          },
+          {
+            "day": 4,
+            "exercises": []
+          },
+          {
+            "day": 5,
+            "exercises": [
+              {
+                "name": "straight_leg_raise",
+                "sets": 3,
+                "reps": 12,
+                "rest_seconds": 60,
+                "notes": "Focus on controlled movement both up and down."
+              },
+              {
+                "name": "terminal_knee_extension",
+                "sets": 3,
+                "reps": 12,
+                "rest_seconds": 60,
+                "notes": "Progress to holding the contraction for 5 seconds."
+              }
+            ]
+          },
+          {
+            "day": 6,
+            "exercises": []
+          },
+          {
+            "day": 7,
+            "exercises": []
+          }
+        ]
+      },
+      {
+        "week": 2,
+        "focus": "Increasing quad strength, initiating controlled knee flexion, improving balance",
+        "days": [
+          {
+            "day": 1,
+            "exercises": [
+              {
+                "name": "straight_leg_raise",
+                "sets": 3,
+                "reps": 12,
+                "rest_seconds": 60,
+                "notes": "Can add a light ankle weight (0.5-1kg) if pain-free."
+              },
+              {
+                "name": "terminal_knee_extension",
+                "sets": 3,
+                "reps": 12,
+                "rest_seconds": 60,
+                "notes": "Focus on a strong quad contraction at the top."
+              },
+              {
+                "name": "mini_squat",
+                "sets": 3,
+                "reps": 10,
+                "rest_seconds": 60,
+                "notes": "Start with a very shallow squat (15-30 degrees knee bend). Use a chair for support if needed. Ensure knees track over toes."
+              }
+            ]
+          },
+          {
+            "day": 2,
+            "exercises": []
+          },
+          {
+            "day": 3,
+            "exercises": [
+              {
+                "name": "straight_leg_raise",
+                "sets": 3,
+                "reps": 15,
+                "rest_seconds": 60,
+                "notes": "Maintain good form throughout. Avoid arching the back."
+              },
+              {
+                "name": "terminal_knee_extension",
+                "sets": 3,
+                "reps": 15,
+                "rest_seconds": 60,
+                "notes": "Ensure full extension with each rep."
+              },
+              {
+                "name": "mini_squat",
+                "sets": 3,
+                "reps": 10,
+                "rest_seconds": 60,
+                "notes": "Gradually increase depth as tolerated, but stay within a pain-free range (max 45-60 degrees)."
+              }
+            ]
+          },
+          {
+            "day": 4,
+            "exercises": []
+          },
+          {
+            "day": 5,
+            "exercises": [
+              {
+                "name": "straight_leg_raise",
+                "sets": 3,
+                "reps": 15,
+                "rest_seconds": 60,
+                "notes": "If using weight, focus on slow and controlled lowering."
+              },
+              {
+                "name": "terminal_knee_extension",
+                "sets": 3,
+                "reps": 15,
+                "rest_seconds": 60,
+                "notes": "Focus on the burn in the quadriceps at the end of each set."
+              },
+              {
+                "name": "mini_squat",
+                "sets": 3,
+                "reps": 12,
+                "rest_seconds": 60,
+                "notes": "Maintain good posture and core engagement. Avoid letting knees collapse inward."
+              }
+            ]
+          },
+          {
+            "day": 6,
+            "exercises": []
+          },
+          {
+            "day": 7,
+            "exercises": []
+          }
+        ]
+      },
+      {
+        "week": 3,
+        "focus": "Progressive strengthening of quads and hamstrings, improving squat depth",
+        "days": [
+          {
+            "day": 1,
+            "exercises": [
+              {
+                "name": "straight_leg_raise",
+                "sets": 3,
+                "reps": 15,
+                "rest_seconds": 45,
+                "notes": "Increase ankle weight if previous reps were easy and pain-free."
+              },
+              {
+                "name": "terminal_knee_extension",
+                "sets": 3,
+                "reps": 15,
+                "rest_seconds": 45,
+                "notes": "Focus on explosive contraction at the top, controlled release."
+              },
+              {
+                "name": "mini_squat",
+                "sets": 3,
+                "reps": 12,
+                "rest_seconds": 60,
+                "notes": "Aim for a deeper squat (up to 60-70 degrees) if comfortable and pain-free. Maintain control."
+              },
+              {
+                "name": "hamstring_curl",
+                "sets": 3,
+                "reps": 10,
+                "rest_seconds": 60,
+                "notes": "Perform lying on your stomach, gently curling the heel towards the glutes. Start with no weight, focus on controlled movement. Only if hamstring graft was NOT used, or very gently if it was (check with your surgeon/PT)."
+              }
+            ]
+          },
+          {
+            "day": 2,
+            "exercises": []
+          },
+          {
+            "day": 3,
+            "exercises": [
+              {
+                "name": "straight_leg_raise",
+                "sets": 3,
+                "reps": 15,
+                "rest_seconds": 45,
+                "notes": "Continue to challenge with weight if appropriate."
+              },
+              {
+                "name": "terminal_knee_extension",
+                "sets": 3,
+                "reps": 15,
+                "rest_seconds": 45,
+                "notes": "Ensure full lockout and hold."
+              },
+              {
+                "name": "mini_squat",
+                "sets": 3,
+                "reps": 15,
+                "rest_seconds": 60,
+                "notes": "Focus on consistency in depth and form. Can try single-leg mini-squat with support if stable and pain-free."
+              },
+              {
+                "name": "hamstring_curl",
+                "sets": 3,
+                "reps": 10,
+                "rest_seconds": 60,
+                "notes": "Ensure smooth movement, avoid jerking. Listen to your body."
+              }
+            ]
+          },
+          {
+            "day": 4,
+            "exercises": []
+          },
+          {
+            "day": 5,
+            "exercises": [
+              {
+                "name": "straight_leg_raise",
+                "sets": 4,
+                "reps": 15,
+                "rest_seconds": 45,
+                "notes": "Increase volume slightly."
+              },
+              {
+                "name": "terminal_knee_extension",
+                "sets": 4,
+                "reps": 15,
+                "rest_seconds": 45,
+                "notes": "Focus on the mind-muscle connection with the quad."
+              },
+              {
+                "name": "mini_squat",
+                "sets": 3,
+                "reps": 15,
+                "rest_seconds": 60,
+                "notes": "If performing single-leg, maintain good balance and control."
+              },
+              {
+                "name": "hamstring_curl",
+                "sets": 3,
+                "reps": 12,
+                "rest_seconds": 60,
+                "notes": "Increase reps if no pain and good control."
+              }
+            ]
+          },
+          {
+            "day": 6,
+            "exercises": []
+          },
+          {
+            "day": 7,
+            "exercises": []
+          }
+        ]
+      },
+      {
+        "week": 4,
+        "focus": "Building strength and endurance, preparing for next phase of rehab, functional movement",
+        "days": [
+          {
+            "day": 1,
+            "exercises": [
+              {
+                "name": "straight_leg_raise",
+                "sets": 4,
+                "reps": 15,
+                "rest_seconds": 45,
+                "notes": "Continue to increase resistance gradually if possible and pain-free."
+              },
+              {
+                "name": "terminal_knee_extension",
+                "sets": 4,
+                "reps": 15,
+                "rest_seconds": 45,
+                "notes": "Can incorporate a resistance band for added challenge."
+              },
+              {
+                "name": "mini_squat",
+                "sets": 3,
+                "reps": 15,
+                "rest_seconds": 60,
+                "notes": "Focus on controlled descent and powerful ascent. Can hold a light weight."
+              },
+              {
+                "name": "hamstring_curl",
+                "sets": 3,
+                "reps": 12,
+                "rest_seconds": 60,
+                "notes": "Can add light ankle weights if tolerated."
+              }
+            ]
+          },
+          {
+            "day": 2,
+            "exercises": []
+          },
+          {
+            "day": 3,
+            "exercises": [
+              {
+                "name": "straight_leg_raise",
+                "sets": 4,
+                "reps": 15,
+                "rest_seconds": 45,
+                "notes": "Maintain perfect form even with added challenge."
+              },
+              {
+                "name": "terminal_knee_extension",
+                "sets": 4,
+                "reps": 15,
+                "rest_seconds": 45,
+                "notes": "Focus on endurance, minimal rest between sets if tolerated."
+              },
+              {
+                "name": "mini_squat",
+                "sets": 4,
+                "reps": 15,
+                "rest_seconds": 60,
+                "notes": "Increase sets for endurance. Focus on smooth movement patterns."
+              },
+              {
+                "name": "hamstring_curl",
+                "sets": 3,
+                "reps": 15,
+                "rest_seconds": 60,
+                "notes": "Increase reps or resistance if comfortable."
+              }
+            ]
+          },
+          {
+            "day": 4,
+            "exercises": []
+          },
+          {
+            "day": 5,
+            "exercises": [
+              {
+                "name": "straight_leg_raise",
+                "sets": 4,
+                "reps": 15,
+                "rest_seconds": 45,
+                "notes": "This is a foundational movement, continue to master it."
+              },
+              {
+                "name": "terminal_knee_extension",
+                "sets": 4,
+                "reps": 15,
+                "rest_seconds": 45,
+                "notes": "Ensure full activation of the quadriceps."
+              },
+              {
+                "name": "mini_squat",
+                "sets": 4,
+                "reps": 15,
+                "rest_seconds": 60,
+                "notes": "Vary stance slightly if comfortable to work different muscle fibers."
+              },
+              {
+                "name": "hamstring_curl",
+                "sets": 3,
+                "reps": 15,
+                "rest_seconds": 60,
+                "notes": "Focus on the eccentric (lowering) phase for increased muscle building."
+              }
+            ]
+          },
+          {
+            "day": 6,
+            "exercises": []
+          },
+          {
+            "day": 7,
+            "exercises": []
+          }
+        ]
+      }
+    ]
+  },
+  "generated_at": "2026-03-28T07:00:45.669756"
+}

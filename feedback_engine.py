@@ -1,207 +1,160 @@
 class FeedbackEngine:
 
-    # =====================================================================
-    # منطق الـ feedback:
-    # كل تمرين عنده مراحل (phases) — كل مرحلة ليها شرط على الزاوية
-    # ورسالة واضحة للمريض.
-    #
-    # الترتيب مهم: الشروط بتتفحص من فوق لتحت،
-    # أول شرط يتحقق بيتبعت رسالته وبيوقف.
-    # =====================================================================
-
     def get_feedback(self, exercise, joint_angles):
         """
-        Parameters
-        ----------
-        exercise      : اسم التمرين  (مثلاً 'mini_squat')
-        joint_angles  : dict فيه الزوايا الحالية
-                        مثلاً {'left_knee': 145, 'left_hip': 170}
-
-        Returns
-        -------
-        str : رسالة feedback واحدة واضحة
+        feedback دقيق - بيقول الزاوية الصح + المسافة عنها + مرحلة التمرين
         """
-
-        # ── تمارين موجودة مسبقاً ─────────────────────────────────────
 
         if exercise == 'bicep_curl':
             elbow = joint_angles.get('left_elbow', 0)
+            target = 50
+            diff = round(abs(elbow - target), 1)
             if elbow > 160:
-                return "Lower your elbow more!"
+                return f"Lower your elbow - target is {target} deg, you are {diff} deg away"
             elif elbow < 40:
-                return "Don't over-curl!"
+                return "Don't over-curl - release slightly!"
             elif 50 <= elbow <= 80:
-                return "Perfect curl position!"
-            return "Keep going!"
+                return "Perfect curl position - hold it!"
+            return f"Keep curling - {diff} degrees to target"
 
         elif exercise == 'squat':
             knee = joint_angles.get('left_knee', 0)
+            target = 90
+            diff = round(abs(knee - target), 1)
             if knee > 160:
-                return "Go deeper!"
+                return f"Go deeper - target {target} deg, you are {diff} deg away"
             elif knee < 70:
-                return "Too deep, come up a bit!"
+                return "Too deep - come up slightly!"
             elif 85 <= knee <= 110:
-                return "Perfect squat depth!"
-            return "Keep going!"
+                return "Perfect squat depth - great form!"
+            return f"Almost there - {diff} degrees to target"
+
+        elif exercise == 'straight_leg_raise':
+            hip = joint_angles.get('left_hip', 0)
+            target = 65
+            diff = round(abs(hip - target), 1)
+            if hip > 140:
+                return f"Phase 1 - Lift your leg up, target is {target} deg"
+            elif 100 < hip <= 140:
+                return f"Phase 2 - Keep raising, {diff} degrees to target"
+            elif 55 <= hip <= 80:
+                return "Phase 3 - Perfect! Hold for 3 seconds"
+            elif hip < 55:
+                return f"Too high - lower {diff} degrees"
+            return "Raise your leg steadily"
+
+        elif exercise == 'terminal_knee_extension':
+            knee = joint_angles.get('left_knee', 0)
+            target = 165
+            diff = round(abs(knee - target), 1)
+            if knee < 30:
+                return f"Phase 1 - Start from 45 degrees, you are at {knee} deg"
+            elif 30 <= knee < 90:
+                return f"Phase 2 - Straighten your knee, {diff} deg to go"
+            elif 90 <= knee < 140:
+                return f"Phase 3 - Halfway there! {diff} deg remaining"
+            elif 140 <= knee < 155:
+                return f"Almost there - push {diff} more degrees!"
+            elif knee >= 155:
+                return "Full extension - excellent form!"
+            return f"Extend your knee - target {target} deg"
+
+        elif exercise == 'mini_squat':
+            knee = joint_angles.get('left_knee', 0)
+            target = 125
+            diff = round(abs(knee - target), 1)
+            if knee > 155:
+                return f"Phase 1 - Bend your knees, target is {target} deg"
+            elif 130 <= knee <= 155:
+                return f"Phase 2 - Go a bit deeper, {diff} deg to target"
+            elif 110 <= knee < 130:
+                return "Phase 3 - Perfect mini squat depth!"
+            elif knee < 110:
+                return f"Too deep - come up {diff} degrees"
+            return "Maintain controlled movement"
+
+        elif exercise == 'hamstring_curl':
+            knee = joint_angles.get('left_knee', 0)
+            target = 95
+            diff = round(abs(knee - target), 1)
+            if knee > 155:
+                return f"Phase 1 - Curl your leg up, target {target} deg"
+            elif 120 <= knee <= 155:
+                return f"Phase 2 - Keep curling, {diff} deg to target"
+            elif 80 <= knee < 120:
+                return "Phase 3 - Great curl! Hold briefly"
+            elif knee < 80:
+                return f"Too far - release {diff} degrees"
+            return "Curl your leg smoothly"
+
+        elif exercise == 'pendulum':
+            shoulder = joint_angles.get('left_shoulder', 0)
+            target = 25
+            diff = round(abs(shoulder - target), 1)
+            if shoulder < 5:
+                return "Phase 1 - Let your arm hang and swing gently"
+            elif 5 <= shoulder <= 30:
+                return f"Phase 2 - Good pendulum! {diff} deg to target"
+            elif shoulder > 30:
+                return f"Too much - reduce by {diff} degrees"
+            return "Relax and swing"
+
+        elif exercise == 'external_rotation':
+            elbow = joint_angles.get('left_elbow', 0)
+            shoulder = joint_angles.get('left_shoulder', 0)
+            target_elbow = 90
+            diff_elbow = round(abs(elbow - target_elbow), 1)
+            if elbow < 75 or elbow > 105:
+                return f"Fix elbow first - must be 90 deg, you are {diff_elbow} deg off"
+            target = 70
+            diff = round(abs(shoulder - target), 1)
+            if shoulder < 50:
+                return f"Phase 2 - Rotate outward more, {diff} deg to target"
+            elif 55 <= shoulder <= 85:
+                return "Perfect rotation range - hold it!"
+            elif shoulder > 85:
+                return f"Too much - reduce by {diff} degrees"
+            return "Rotate slowly and controlled"
+
+        elif exercise == 'wall_slide':
+            shoulder = joint_angles.get('left_shoulder', 0)
+            target = 155
+            diff = round(abs(shoulder - target), 1)
+            if shoulder < 50:
+                return f"Phase 1 - Start with arms at shoulder height"
+            elif 50 <= shoulder < 90:
+                return f"Phase 2 - Slide up, {diff} deg to target"
+            elif 90 <= shoulder < 130:
+                return f"Phase 3 - Halfway! {diff} deg remaining"
+            elif 130 <= shoulder <= 165:
+                return "Phase 4 - Excellent! Full slide reached"
+            elif shoulder > 165:
+                return "Stay within pain-free range"
+            return "Slide upward smoothly"
+
+        elif exercise == 'shoulder_abduction':
+            shoulder = joint_angles.get('left_shoulder', 0)
+            target = 85
+            diff = round(abs(shoulder - target), 1)
+            if shoulder < 20:
+                return f"Phase 1 - Raise arm to the side, target {target} deg"
+            elif 20 <= shoulder < 60:
+                return f"Phase 2 - Keep raising, {diff} deg to target"
+            elif 60 <= shoulder <= 95:
+                return "Phase 3 - Perfect! Arm parallel to ground"
+            elif shoulder > 95:
+                return f"Too high - lower by {diff} degrees"
+            return "Raise your arm to the side"
 
         elif exercise == 'shoulder_raise':
             shoulder = joint_angles.get('left_shoulder', 0)
+            target = 90
+            diff = round(abs(shoulder - target), 1)
             if shoulder < 80:
-                return "Raise your arm higher!"
+                return f"Raise higher - {diff} deg to target {target}"
             elif shoulder > 100:
-                return "Lower your arm slightly!"
+                return f"Lower slightly - {diff} deg above target"
             else:
                 return "Perfect shoulder position!"
 
-        # ── تمارين الرباط الصليبي (ACL) ─────────────────────────────
-
-        elif exercise == 'straight_leg_raise':
-            # نقيس زاوية الورك (hip)
-            # البداية: رجل مفرودة على الأرض (~170°)
-            # الهدف:   رجل مرفوعة (~65°)
-            hip = joint_angles.get('left_hip', 0)
-
-            if hip > 140:
-                # لسه في البداية، الرجل على الأرض
-                return "Lift your leg up slowly — keep it straight!"
-            elif 100 < hip <= 140:
-                # بدأ يرفع بس لسه مش وصل
-                return "Keep raising — don't bend your knee!"
-            elif 55 <= hip <= 80:
-                # وصل للهدف
-                return "Perfect! Hold for 3 seconds."
-            elif hip < 55:
-                # رفع أكتر من اللازم
-                return "Too high — lower your leg slightly."
-            return "Raise your leg steadily."
-
-        elif exercise == 'terminal_knee_extension':
-            # نقيس زاوية الركبة (knee)
-            # البداية: ركبة مثنية (~45°)
-            # الهدف:   ركبة ممدودة (~165°)
-            knee = joint_angles.get('left_knee', 0)
-
-            if knee < 30:
-                return "Too much bend — start from about 45 degrees."
-            elif 30 <= knee < 90:
-                # لسه في مرحلة الثني
-                return "Straighten your knee slowly."
-            elif 90 <= knee < 140:
-                # في المنتصف
-                return "Keep extending — you're halfway there!"
-            elif 140 <= knee < 155:
-                # قرب من الهدف
-                return "Almost fully extended — push a little more!"
-            elif knee >= 155:
-                # وصل
-                return "Full extension — excellent!"
-            return "Extend your knee."
-
-        elif exercise == 'mini_squat':
-            # نقيس زاوية الركبة (knee)
-            # البداية: واقف (~160°)
-            # الهدف:   نزول جزئي (~125°)
-            knee = joint_angles.get('left_knee', 0)
-
-            if knee > 155:
-                # واقف — ينزل
-                return "Bend your knees slightly — go down slowly."
-            elif 130 <= knee <= 155:
-                # نزل شوية بس مش وصل
-                return "A little deeper — keep your back straight!"
-            elif 110 <= knee < 130:
-                # وصل للهدف
-                return "Perfect mini squat depth!"
-            elif knee < 110:
-                # نزل أكتر من اللازم
-                return "Too deep for a mini squat — come up a bit."
-            return "Maintain controlled movement."
-
-        elif exercise == 'hamstring_curl':
-            # نقيس زاوية الركبة (knee)
-            # البداية: رجل مفرودة (~170°)
-            # الهدف:   ركبة متنية (~95°)
-            knee = joint_angles.get('left_knee', 0)
-
-            if knee > 155:
-                # رجل مفرودة — يثنيها
-                return "Curl your leg up — bend your knee backward."
-            elif 120 <= knee <= 155:
-                # بدأ يثني بس لسه مش وصل
-                return "Keep curling — bring your heel toward you!"
-            elif 80 <= knee < 120:
-                # وصل للهدف
-                return "Great curl! Hold briefly."
-            elif knee < 80:
-                # ثنى أكتر من اللازم
-                return "Too far — don't over-flex."
-            return "Curl your leg smoothly."
-
-        # ── تمارين الكتف (Shoulder) ──────────────────────────────────
-
-        elif exercise == 'pendulum':
-            # نقيس زاوية الكتف (shoulder)
-            # حركة صغيرة جداً — تأرجح بسيط
-            shoulder = joint_angles.get('left_shoulder', 0)
-
-            if shoulder < 5:
-                return "Let your arm hang and swing gently."
-            elif 5 <= shoulder <= 30:
-                return "Good pendulum motion — keep it relaxed!"
-            elif shoulder > 30:
-                return "Too much movement — smaller circles."
-            return "Relax your shoulder and swing."
-
-        elif exercise == 'external_rotation':
-            # نقيس زاوية الكوع (elbow) — لازم يفضل ~90°
-            # ونقيس زاوية الكتف (shoulder) للتدوير
-            elbow    = joint_angles.get('left_elbow', 0)
-            shoulder = joint_angles.get('left_shoulder', 0)
-
-            # أول حاجة — الكوع لازم يكون ثابت عند 90°
-            if elbow < 75 or elbow > 105:
-                return "Keep your elbow at 90 degrees — don't move it!"
-
-            # لو الكوع تمام — نشوف التدوير
-            if shoulder < 50:
-                return "Rotate your forearm outward more."
-            elif 55 <= shoulder <= 85:
-                return "Perfect rotation range!"
-            elif shoulder > 85:
-                return "Too much rotation — stay within comfort."
-            return "Rotate slowly and controlled."
-
-        elif exercise == 'wall_slide':
-            # نقيس زاوية الكتف (shoulder)
-            # البداية: ~65°   النهاية: ~155°
-            shoulder = joint_angles.get('left_shoulder', 0)
-
-            if shoulder < 50:
-                return "Start with your arms at shoulder height against the wall."
-            elif 50 <= shoulder < 90:
-                return "Slide your arms up the wall slowly."
-            elif 90 <= shoulder < 130:
-                return "Halfway — keep pressing lightly on the wall!"
-            elif 130 <= shoulder <= 165:
-                return "Excellent range! You reached full slide."
-            elif shoulder > 165:
-                return "Don't force it — stay within your pain-free range."
-            return "Slide upward smoothly."
-
-        elif exercise == 'shoulder_abduction':
-            # نقيس زاوية الكتف (shoulder) — رفع جانبي
-            # البداية: ~12°   النهاية: ~85°
-            shoulder = joint_angles.get('left_shoulder', 0)
-
-            if shoulder < 20:
-                return "Raise your arm out to the side slowly."
-            elif 20 <= shoulder < 60:
-                return "Keep raising — arm should reach shoulder level."
-            elif 60 <= shoulder <= 95:
-                return "Perfect! Arm is parallel to the ground."
-            elif shoulder > 95:
-                return "Too high for this exercise — lower slightly."
-            return "Raise your arm to the side."
-
-        # ── fallback ──────────────────────────────────────────────────
         return "Keep going!"
