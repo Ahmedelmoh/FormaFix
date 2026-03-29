@@ -1,4 +1,10 @@
+.env
 __pycache__/
 *.pyc
-env1/
-.env
+*.pyo
+plan.json
+session_data.json
+pose_landmarker.task
+*.task
+.venv/
+venv/
