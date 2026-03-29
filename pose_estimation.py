@@ -64,6 +64,41 @@ EXERCISE_JOINT = {
 }
 
 def run_pose_estimation(exercise_info):
+    # Inside run_pose_estimation(exercise_info):
+# 1. Initialize data tracking
+all_scores = []
+max_angle_reached = 0
+
+# ... (inside the while loop) ...
+if results.pose_landmarks:
+    # ... (your existing logic) ...
+    
+    # 2. Collect data every frame
+    all_scores.append(score)
+    if current_angle > max_angle_reached:
+        max_angle_reached = current_angle
+
+# ... (after the while loop breaks - when user presses 'q') ...
+
+# 3. Prepare the Session Data Bundle
+if all_scores:
+    session_results = {
+        "exercise_name": exercise_display,
+        "reps": reps,
+        "avg_score": round(sum(all_scores) / len(all_scores)),
+        "best_angle": max_angle_reached
+    }
+
+    # 4. Call the Agent
+    from progress_agent import ProgressSummaryAgent
+    summary_agent = ProgressSummaryAgent()
+    
+    print("\n" + "="*40)
+    print("📝 GENERATING PROGRESS SUMMARY...")
+    report = summary_agent.generate_report(session_results)
+    print("-" * 40)
+    print(report)
+    print("="*40 + "\n")
     exercise_name = exercise_info['name']
     exercise_display = exercise_info['display']
     joint_key = EXERCISE_JOINT.get(exercise_name, 'left_elbow')
