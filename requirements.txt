@@ -1,0 +1,17 @@
+# FormaFix — Runtime dependencies
+# Install with:  pip install -r requirements.txt
+
+# Computer vision & pose estimation
+mediapipe>=0.10.0
+opencv-python>=4.8.0
+numpy>=1.24.0
+
+# AI providers
+anthropic>=0.20.0     # optional: only if AI_PROVIDER=anthropic
+# google-generativeai is accessed via raw HTTP — no extra package needed
+
+# Audio feedback
+pyttsx3>=2.90
+
+# Utilities
+python-dotenv>=1.0.0
