@@ -1,0 +1,87 @@
+[
+  {
+    "timestamp": "2026-03-30T01:31:43.647474",
+    "patient": "Patient",
+    "injury": "Acute shoulder injury (limited abduction)",
+    "week": 1,
+    "day": 1,
+    "phase": "early_recovery",
+    "exercises": [
+      {
+        "name": "pendulum",
+        "target_sets": 3,
+        "target_reps": 10,
+        "completed_sets": 3,
+        "scores": [
+          76,
+          71,
+          76
+        ],
+        "avg_score": 74
+      }
+    ],
+    "overall_score": 74
+  },
+  {
+    "timestamp": "2026-03-30T11:09:51.703473",
+    "patient": "Patient",
+    "injury": "Acute shoulder injury (limited abduction)",
+    "week": 1,
+    "day": 3,
+    "phase": "early_recovery",
+    "exercises": [
+      {
+        "name": "pendulum",
+        "target_sets": 3,
+        "target_reps": 10,
+        "completed_sets": 3,
+        "scores": [
+          79,
+          73,
+          79
+        ],
+        "avg_score": 77
+      }
+    ],
+    "overall_score": 77
+  },
+  {
+    "timestamp": "2026-03-30T11:40:35.881152",
+    "patient": "Patient",
+    "injury": "Acute shoulder injury (limited abduction)",
+    "week": 1,
+    "day": 1,
+    "phase": "early_recovery",
+    "exercises": [],
+    "overall_score": 0
+  },
+  {
+    "timestamp": "2026-03-30T11:45:15.088507",
+    "patient": "Patient",
+    "injury": "Acute shoulder injury (limited abduction)",
+    "week": 1,
+    "day": 5,
+    "phase": "early_recovery",
+    "exercises": [],
+    "overall_score": 0
+  },
+  {
+    "timestamp": "2026-03-30T11:49:39.616089",
+    "patient": "Patient",
+    "injury": "Acute shoulder injury (limited abduction)",
+    "week": 1,
+    "day": 1,
+    "phase": "early_recovery",
+    "exercises": [
+      {
+        "name": "pendulum",
+        "target_sets": 3,
+        "target_reps": 10,
+        "completed_sets": 0,
+        "scores": [],
+        "avg_score": 0
+      }
+    ],
+    "overall_score": 0
+  }
+]

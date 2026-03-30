@@ -1,0 +1,381 @@
+{
+  "patient": {
+    "name": "Patient",
+    "age": null,
+    "injury": "Acute shoulder injury (limited abduction)",
+    "injury_date": "2023-10-27",
+    "surgery": false,
+    "surgery_date": null,
+    "pain_level": 7,
+    "mobility": "limited",
+    "previous_treatment": "None",
+    "goal": "Regain full, pain-free shoulder movement and strength.",
+    "notes": "Acute shoulder injury with significant pain (7/10) and limited range of motion, particularly abduction. No prior treatment or surgery. Rehabilitation will start very gently due to high pain level and recent onset."
+  },
+  "plan": {
+    "total_weeks": 4,
+    "phase": "early_recovery",
+    "phase_description": "This initial phase focuses on pain management, reducing inflammation, and restoring very gentle, pain-free passive and active-assisted range of motion to your shoulder. Progression will be slow and guided by your pain levels.",
+    "weeks": [
+      {
+        "week": 1,
+        "focus": "Pain relief and gentle passive range of motion.",
+        "days": [
+          {
+            "day": 1,
+            "exercises": [
+              {
+                "name": "pendulum",
+                "sets": 3,
+                "reps": 10,
+                "rest_seconds": 30,
+                "notes": "Lean forward, letting your injured arm hang freely. Gently swing your arm in small circles (clockwise and counter-clockwise) and front-to-back, letting gravity do the work. Keep movements pain-free."
+              }
+            ]
+          },
+          {
+            "day": 2,
+            "exercises": []
+          },
+          {
+            "day": 3,
+            "exercises": [
+              {
+                "name": "pendulum",
+                "sets": 3,
+                "reps": 10,
+                "rest_seconds": 30,
+                "notes": "Lean forward, letting your injured arm hang freely. Gently swing your arm in small circles (clockwise and counter-clockwise) and front-to-back, letting gravity do the work. Keep movements pain-free."
+              }
+            ]
+          },
+          {
+            "day": 4,
+            "exercises": []
+          },
+          {
+            "day": 5,
+            "exercises": [
+              {
+                "name": "pendulum",
+                "sets": 3,
+                "reps": 10,
+                "rest_seconds": 30,
+                "notes": "Lean forward, letting your injured arm hang freely. Gently swing your arm in small circles (clockwise and counter-clockwise) and front-to-back, letting gravity do the work. Keep movements pain-free."
+              }
+            ]
+          },
+          {
+            "day": 6,
+            "exercises": []
+          },
+          {
+            "day": 7,
+            "exercises": []
+          }
+        ]
+      },
+      {
+        "week": 2,
+        "focus": "Continue pain management, increase gentle passive/active-assisted range of motion.",
+        "days": [
+          {
+            "day": 1,
+            "exercises": [
+              {
+                "name": "pendulum",
+                "sets": 3,
+                "reps": 15,
+                "rest_seconds": 30,
+                "notes": "Increase the range of motion slightly if pain allows, but always stay within a pain-free limit."
+              },
+              {
+                "name": "external_rotation",
+                "sets": 3,
+                "reps": 10,
+                "rest_seconds": 30,
+                "notes": "Lie on your side with a small towel under your elbow. Keep your elbow bent at 90 degrees and gently rotate your forearm upwards, keeping your upper arm still. Only move as far as comfortable and pain-free (0-1/10 pain)."
+              }
+            ]
+          },
+          {
+            "day": 2,
+            "exercises": []
+          },
+          {
+            "day": 3,
+            "exercises": [
+              {
+                "name": "pendulum",
+                "sets": 3,
+                "reps": 15,
+                "rest_seconds": 30,
+                "notes": "Increase the range of motion slightly if pain allows, but always stay within a pain-free limit."
+              },
+              {
+                "name": "external_rotation",
+                "sets": 3,
+                "reps": 10,
+                "rest_seconds": 30,
+                "notes": "Lie on your side with a small towel under your elbow. Keep your elbow bent at 90 degrees and gently rotate your forearm upwards, keeping your upper arm still. Only move as far as comfortable and pain-free (0-1/10 pain)."
+              }
+            ]
+          },
+          {
+            "day": 4,
+            "exercises": []
+          },
+          {
+            "day": 5,
+            "exercises": [
+              {
+                "name": "pendulum",
+                "sets": 3,
+                "reps": 15,
+                "rest_seconds": 30,
+                "notes": "Increase the range of motion slightly if pain allows, but always stay within a pain-free limit."
+              },
+              {
+                "name": "external_rotation",
+                "sets": 3,
+                "reps": 10,
+                "rest_seconds": 30,
+                "notes": "Lie on your side with a small towel under your elbow. Keep your elbow bent at 90 degrees and gently rotate your forearm upwards, keeping your upper arm still. Only move as far as comfortable and pain-free (0-1/10 pain)."
+              }
+            ]
+          },
+          {
+            "day": 6,
+            "exercises": []
+          },
+          {
+            "day": 7,
+            "exercises": []
+          }
+        ]
+      },
+      {
+        "week": 3,
+        "focus": "Improve active range of motion and introduce very light active-assisted exercises.",
+        "days": [
+          {
+            "day": 1,
+            "exercises": [
+              {
+                "name": "pendulum",
+                "sets": 3,
+                "reps": 20,
+                "rest_seconds": 30,
+                "notes": "Continue with larger, pain-free swings."
+              },
+              {
+                "name": "external_rotation",
+                "sets": 3,
+                "reps": 12,
+                "rest_seconds": 30,
+                "notes": "Perform on your side or standing with a light resistance band if pain-free. Keep movements controlled and slow."
+              },
+              {
+                "name": "wall_slide",
+                "sets": 3,
+                "reps": 10,
+                "rest_seconds": 30,
+                "notes": "Stand facing a wall, place forearms on the wall. Slowly slide your arms up the wall, only as high as pain-free. Keep elbows close to your body and avoid shrugging."
+              }
+            ]
+          },
+          {
+            "day": 2,
+            "exercises": []
+          },
+          {
+            "day": 3,
+            "exercises": [
+              {
+                "name": "pendulum",
+                "sets": 3,
+                "reps": 20,
+                "rest_seconds": 30,
+                "notes": "Continue with larger, pain-free swings."
+              },
+              {
+                "name": "external_rotation",
+                "sets": 3,
+                "reps": 12,
+                "rest_seconds": 30,
+                "notes": "Perform on your side or standing with a light resistance band if pain-free. Keep movements controlled and slow."
+              },
+              {
+                "name": "wall_slide",
+                "sets": 3,
+                "reps": 10,
+                "rest_seconds": 30,
+                "notes": "Stand facing a wall, place forearms on the wall. Slowly slide your arms up the wall, only as high as pain-free. Keep elbows close to your body and avoid shrugging."
+              }
+            ]
+          },
+          {
+            "day": 4,
+            "exercises": []
+          },
+          {
+            "day": 5,
+            "exercises": [
+              {
+                "name": "pendulum",
+                "sets": 3,
+                "reps": 20,
+                "rest_seconds": 30,
+                "notes": "Continue with larger, pain-free swings."
+              },
+              {
+                "name": "external_rotation",
+                "sets": 3,
+                "reps": 12,
+                "rest_seconds": 30,
+                "notes": "Perform on your side or standing with a light resistance band if pain-free. Keep movements controlled and slow."
+              },
+              {
+                "name": "wall_slide",
+                "sets": 3,
+                "reps": 10,
+                "rest_seconds": 30,
+                "notes": "Stand facing a wall, place forearms on the wall. Slowly slide your arms up the wall, only as high as pain-free. Keep elbows close to your body and avoid shrugging."
+              }
+            ]
+          },
+          {
+            "day": 6,
+            "exercises": []
+          },
+          {
+            "day": 7,
+            "exercises": []
+          }
+        ]
+      },
+      {
+        "week": 4,
+        "focus": "Progress active range of motion and introduce light strengthening.",
+        "days": [
+          {
+            "day": 1,
+            "exercises": [
+              {
+                "name": "pendulum",
+                "sets": 3,
+                "reps": 20,
+                "rest_seconds": 30,
+                "notes": "Use as a warm-up. Focus on controlled, full pain-free range."
+              },
+              {
+                "name": "external_rotation",
+                "sets": 3,
+                "reps": 12,
+                "rest_seconds": 30,
+                "notes": "If pain allows, use a very light resistance band. Focus on controlled movement."
+              },
+              {
+                "name": "wall_slide",
+                "sets": 3,
+                "reps": 12,
+                "rest_seconds": 30,
+                "notes": "Increase range of motion if pain-free, trying to reach higher up the wall without pain or shrugging."
+              },
+              {
+                "name": "shoulder_abduction",
+                "sets": 3,
+                "reps": 8,
+                "rest_seconds": 30,
+                "notes": "Slowly lift your arm out to the side, only to shoulder height or as far as pain allows (0-1/10). Do not push into pain. Keep your palm facing down."
+              }
+            ]
+          },
+          {
+            "day": 2,
+            "exercises": []
+          },
+          {
+            "day": 3,
+            "exercises": [
+              {
+                "name": "pendulum",
+                "sets": 3,
+                "reps": 20,
+                "rest_seconds": 30,
+                "notes": "Use as a warm-up. Focus on controlled, full pain-free range."
+              },
+              {
+                "name": "external_rotation",
+                "sets": 3,
+                "reps": 12,
+                "rest_seconds": 30,
+                "notes": "If pain allows, use a very light resistance band. Focus on controlled movement."
+              },
+              {
+                "name": "wall_slide",
+                "sets": 3,
+                "reps": 12,
+                "rest_seconds": 30,
+                "notes": "Increase range of motion if pain-free, trying to reach higher up the wall without pain or shrugging."
+              },
+              {
+                "name": "shoulder_abduction",
+                "sets": 3,
+                "reps": 8,
+                "rest_seconds": 30,
+                "notes": "Slowly lift your arm out to the side, only to shoulder height or as far as pain allows (0-1/10). Do not push into pain. Keep your palm facing down."
+              }
+            ]
+          },
+          {
+            "day": 4,
+            "exercises": []
+          },
+          {
+            "day": 5,
+            "exercises": [
+              {
+                "name": "pendulum",
+                "sets": 3,
+                "reps": 20,
+                "rest_seconds": 30,
+                "notes": "Use as a warm-up. Focus on controlled, full pain-free range."
+              },
+              {
+                "name": "external_rotation",
+                "sets": 3,
+                "reps": 12,
+                "rest_seconds": 30,
+                "notes": "If pain allows, use a very light resistance band. Focus on controlled movement."
+              },
+              {
+                "name": "wall_slide",
+                "sets": 3,
+                "reps": 12,
+                "rest_seconds": 30,
+                "notes": "Increase range of motion if pain-free, trying to reach higher up the wall without pain or shrugging."
+              },
+              {
+                "name": "shoulder_abduction",
+                "sets": 3,
+                "reps": 8,
+                "rest_seconds": 30,
+                "notes": "Slowly lift your arm out to the side, only to shoulder height or as far as pain allows (0-1/10). Do not push into pain. Keep your palm facing down."
+              }
+            ]
+          },
+          {
+            "day": 6,
+            "exercises": []
+          },
+          {
+            "day": 7,
+            "exercises": []
+          }
+        ]
+      }
+    ]
+  },
+  "generated_at": "2026-03-29T15:20:18.231101"
+}
