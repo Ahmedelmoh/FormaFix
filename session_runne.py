@@ -18,6 +18,7 @@ from rep_counter import RepCounter
 from form_evaluator import FormEvaluator
 from feedback_engine import FeedbackEngine
 from audio_feedback import AudioFeedback
+from progress_analyzer import run_plan_update, analyze_sessions, print_analysis_report
 
 BaseOptions = mp.tasks.BaseOptions
 PoseLandmarker = mp.tasks.vision.PoseLandmarker
@@ -271,6 +272,33 @@ def save_session(plan, week, day, ex_results, f="session_data.json"):
     return session
 
 
+def _offer_plan_update(plan_file="plan.json", sessions_file="session_data.json"):
+    """
+    After a session, show the performance report and ask the patient
+    whether they want to regenerate the plan based on their scores.
+    """
+    import json, os
+
+    # Quick inline report without re-importing everything
+    if not os.path.exists(sessions_file):
+        return
+
+    with open(sessions_file, encoding="utf-8") as f:
+        sessions = json.load(f)
+
+    stats = analyze_sessions(sessions)
+    print_analysis_report(stats, sessions)
+
+    print("\n  Would you like to update your plan based on this performance?")
+    print("  (The AI will adjust future weeks to match your progress)")
+    choice = input("  Update plan? [y/N]: ").strip().lower()
+
+    if choice == "y":
+        run_plan_update(plan_file=plan_file, sessions_file=sessions_file, silent=True)
+    else:
+        print("\n  Plan kept unchanged. Run progress_analyzer.py anytime to update.")
+
+
 def run_session(plan_file="plan.json"):
     plan = load_plan(plan_file)
     exercises, wn, dn = select_day(plan)
@@ -295,7 +323,8 @@ def run_session(plan_file="plan.json"):
 
     session = save_session(plan, wn, dn, results)
     print(f"\n  Session complete! Overall: {session['overall_score']}/100")
-    print("  Next: python progress_summary.py")
+
+    _offer_plan_update()
 
 
 if __name__ == "__main__":
