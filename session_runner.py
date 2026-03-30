@@ -126,11 +126,17 @@ def load_plan(filepath: str = "plan.json") -> dict:
 
 
 def select_day(plan: dict) -> tuple[list, int, int]:
-    weeks = plan["plan"]["weeks"]
+    plan_body = plan.get("plan")
+    if not plan_body or "weeks" not in plan_body:
+        raise KeyError(
+            "plan.json is missing the 'plan.weeks' structure. "
+            "Regenerate it with rehab_agent.py or plan_generator.py."
+        )
+    weeks = plan_body["weeks"]
     print(f"\n{'='*45}")
     print(f"  Patient : {_get_patient_name(plan)}")
     print(f"  Injury  : {plan['patient'].get('injury', 'Unknown')}")
-    print(f"  Phase   : {plan['plan']['phase']}")
+    print(f"  Phase   : {plan_body.get('phase', 'unknown')}")
     print(f"{'='*45}")
 
     for w in weeks:
@@ -323,7 +329,7 @@ def save_session(
         "injury":        plan["patient"].get("injury", "Unknown"),
         "week":          week,
         "day":           day,
-        "phase":         plan["plan"]["phase"],
+        "phase":         plan.get("plan", {}).get("phase", "unknown"),
         "exercises":     ex_results,
         "overall_score": round(float(np.mean(scores))) if scores else 0,
     }
@@ -363,7 +369,7 @@ def run_session(plan_file: str = "plan.json") -> None:
 
     # FIX 5 - show progress automatically after every session
     try:
-        from progress_viewer import show_progress
+        from progress_agent import show_progress
         show_progress()
     except Exception as e:
         print(f"  [Info] Progress viewer: {e}")

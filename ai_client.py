@@ -2,13 +2,13 @@
 ai_client.py — FormaFix
 ========================
 Unified AI client supporting three providers:
-  - Anthropic (Claude)
-  - Google Gemini
-  - Ollama (local)
+    - Anthropic (Claude)
+    - Google Gemini
+    - Ollama (local)
 
 Usage:
-  from ai_client import ask_ai
-  response = ask_ai(messages, system_prompt)
+    from ai_client import ask_ai
+    response = ask_ai(messages, system_prompt)
 """
 
 import json
@@ -109,8 +109,8 @@ def _call_ollama(messages: list, system: str) -> str:
     """
     Ollama uses an OpenAI-compatible API.
     Requires Ollama running locally:
-      ollama serve
-      ollama pull llama3
+        ollama serve
+        ollama pull llama3
     """
     full_messages = [{"role": "system", "content": system}] + messages
 

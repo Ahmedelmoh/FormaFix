@@ -8,3 +8,4 @@ pose_landmarker.task
 *.task
 .venv/
 venv/
+*.zip

@@ -11,8 +11,8 @@ class FormEvaluator:
     Reference angles for every supported exercise.
 
     Each entry uses one of two formats:
-      Legacy  — explicit angle keys (bicep_curl, squat, shoulder_raise)
-      Current — start_angle / end_angle / tolerance / joint
+        Legacy  — explicit angle keys (bicep_curl, squat, shoulder_raise)
+        Current — start_angle / end_angle / tolerance / joint
     """
 
     REFERENCE_ANGLES: dict[str, dict] = {

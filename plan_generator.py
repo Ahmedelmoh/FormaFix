@@ -1,13 +1,6 @@
 """
 plan_generator.py — FormaFix
 ==============================
-Reserved for future use: programmatic (non-AI) plan generation helpers.
-
-Currently the plan is generated conversationally by rehab_agent.py.
-"""
-"""
-plan_generator.py — FormaFix
-==============================
 Fallback plan generator — بيشتغل بدون AI أو internet.
 
 بيولّد خطة تمارين أساسية بناءً على:

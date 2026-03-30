@@ -18,7 +18,7 @@ from audio_feedback import AudioFeedback
 from exercise_selector import select_exercise
 from feedback_engine import FeedbackEngine
 from form_evaluator import FormEvaluator
-from progress_agent import ProgressSummaryAgent
+from progress_agent import show_progress
 from rep_counter import RepCounter
 
 # ── MediaPipe setup ──────────────────────────────────────────────────────────
@@ -173,24 +173,21 @@ def run_pose_estimation(exercise_info: dict) -> None:
     cap.release()
     cv2.destroyAllWindows()
 
-    # ── Post-session AI report ───────────────────────────────────────────────
+    # ── Post-session summary ─────────────────────────────────────────────────
     if all_scores:
         avg_score = round(sum(all_scores) / len(all_scores))
-        session_results = {
-            "exercise_name": exercise_display,
-            "reps":          counter.counter,
-            "avg_score":     avg_score,
-            "best_angle":    round(max_angle_reached, 1),
-        }
         print("\n" + "=" * 40)
-        print("📝 GENERATING PROGRESS SUMMARY...")
+        print("📝 SESSION SUMMARY")
+        print("-" * 40)
+        print(f"  Exercise  : {exercise_display}")
+        print(f"  Reps      : {counter.counter}")
+        print(f"  Avg Score : {avg_score}/100")
+        print(f"  Best Angle: {round(max_angle_reached, 1)}°")
+        print("=" * 40)
         try:
-            report = ProgressSummaryAgent().generate_report(session_results)
-            print("-" * 40)
-            print(report)
+            show_progress()
         except Exception as e:
-            print(f"[Warning] Could not generate AI report: {e}")
-        print("=" * 40 + "\n")
+            print(f"[Info] Progress report unavailable: {e}")
 
 
 if __name__ == "__main__":
