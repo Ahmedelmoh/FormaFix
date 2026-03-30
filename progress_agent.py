@@ -1,43 +1,96 @@
 """
 progress_agent.py — FormaFix
 ==============================
-Generates a natural-language session summary using the configured AI provider.
+Reads session_data.json and displays a clear progress report in the terminal.
+
+Usage:
+    python progress_agent.py
 """
 
-from ai_client import ask_ai
-
-_SYSTEM_PROMPT = (
-    "You are the Progress Summary Agent for FormaFix, an AI-powered physiotherapy app. "
-    "Analyze the exercise session data and provide a concise summary in Egyptian Arabic (Ammiya). "
-    "Be encouraging. Mention whether the form score was good or needs work, "
-    "and give one practical tip for the next session."
-)
+import json
+import os
+from datetime import datetime
 
 
-class ProgressSummaryAgent:
-    """Wraps the AI client to produce post-session progress reports."""
-
-    def generate_report(self, session_data: dict) -> str:
-        """
-        Generate a natural-language progress report.
-
-        Parameters
-        ----------
-        session_data : dict with keys:
-            exercise_name, reps, avg_score, best_angle
-
-        Returns
-        -------
-        str : AI-generated report text
-        """
-        user_message = (
-            f"Session Results:\n"
-            f"- Exercise  : {session_data['exercise_name']}\n"
-            f"- Reps      : {session_data['reps']}\n"
-            f"- Avg Score : {session_data['avg_score']}/100\n"
-            f"- Best angle: {session_data['best_angle']}°"
+def load_sessions(filepath: str = "session_data.json") -> list[dict]:
+    if not os.path.exists(filepath):
+        raise FileNotFoundError(
+            "session_data.json not found. Complete at least one session first."
         )
-        return ask_ai(
-            messages=[{"role": "user", "content": user_message}],
-            system_prompt=_SYSTEM_PROMPT,
-        )
+    with open(filepath, encoding="utf-8") as f:
+        return json.load(f)
+
+
+def _bar(score: int, width: int = 20) -> str:
+    """Render a simple ASCII progress bar for a score 0–100."""
+    filled = round(score / 100 * width)
+    colour = "🟢" if score >= 80 else "🟡" if score >= 50 else "🔴"
+    return f"[{'█' * filled}{'░' * (width - filled)}] {score}/100 {colour}"
+
+
+def show_progress(filepath: str = "session_data.json") -> None:
+    sessions = load_sessions(filepath)
+
+    if not sessions:
+        print("No sessions recorded yet.")
+        return
+
+    # ── Patient summary ───────────────────────────────────────────────────────
+    latest   = sessions[-1]
+    patient  = latest.get("patient") or "Unknown"
+    injury   = latest.get("injury", "Unknown")
+    total    = len(sessions)
+
+    print("\n" + "=" * 55)
+    print("  FormaFix — Progress Report")
+    print("=" * 55)
+    print(f"  Patient : {patient}")
+    print(f"  Injury  : {injury}")
+    print(f"  Total sessions completed: {total}")
+    print("=" * 55)
+
+    # ── Per-session history ───────────────────────────────────────────────────
+    print("\n📅 Session History:\n")
+    for i, s in enumerate(sessions, 1):
+        ts    = s.get("timestamp", "")
+        date  = ts[:10] if ts else "unknown"
+        week  = s.get("week", "?")
+        day   = s.get("day", "?")
+        score = s.get("overall_score", 0)
+        ex_names = [e["name"] for e in s.get("exercises", [])]
+
+        print(f"  Session {i:>2} | {date} | Week {week} Day {day}")
+        print(f"           Exercises : {', '.join(ex_names) or 'none'}")
+        print(f"           Score     : {_bar(score)}")
+        print()
+
+    # ── Trend analysis ────────────────────────────────────────────────────────
+    scores = [s["overall_score"] for s in sessions if s["overall_score"] > 0]
+    if len(scores) >= 2:
+        trend = scores[-1] - scores[0]
+        arrow = "📈" if trend > 0 else "📉" if trend < 0 else "➡️"
+        print("-" * 55)
+        print(f"  Overall trend : {arrow}  {'+' if trend >= 0 else ''}{trend} points")
+        print(f"  Best session  : {max(scores)}/100")
+        print(f"  Average score : {round(sum(scores)/len(scores))}/100")
+
+    # ── Exercise breakdown ────────────────────────────────────────────────────
+    ex_stats: dict[str, list[int]] = {}
+    for s in sessions:
+        for ex in s.get("exercises", []):
+            name = ex["name"]
+            sc   = ex.get("avg_score", 0)
+            if sc > 0:
+                ex_stats.setdefault(name, []).append(sc)
+
+    if ex_stats:
+        print("\n📊 Per-Exercise Averages:\n")
+        for name, sc_list in ex_stats.items():
+            avg = round(sum(sc_list) / len(sc_list))
+            print(f"  {name:<30} {_bar(avg, width=15)}")
+
+    print("\n" + "=" * 55 + "\n")
+
+
+if __name__ == "__main__":
+    show_progress()

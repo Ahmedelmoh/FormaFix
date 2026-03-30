@@ -140,6 +140,9 @@ def run_rehab_agent() -> dict | None:
     print("   FormaFix — Rehabilitation Planning Agent")
     print(f"   AI provider: {PROVIDER.upper()}")
     print("=" * 50)
+
+    # FIX — ask for name upfront so patient is never null in plan.json
+    patient_name = input("Your name: ").strip() or "Patient"
     print("Describe your injury to get started. (type 'quit' to exit)\n")
 
     conversation: list[dict] = []
@@ -164,6 +167,10 @@ def run_rehab_agent() -> dict | None:
 
         plan = _extract_plan(response)
         if plan:
+            # FIX — inject the patient name collected at startup
+            if plan.get("patient") and not plan["patient"].get("name"):
+                plan["patient"]["name"] = patient_name
+
             # Print any prose that preceded the JSON
             prose = _clean_response(response)
             if prose:
