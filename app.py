@@ -300,16 +300,6 @@ class FormaFixApp:
     # ── Training Page ────────────────────────────────────────────────────
 
     def show_training_page(self):
-        self.api.camera_start()
-
-        # 2. Point the UI image to the server's stream endpoint
-        # This replaces the "first frame only" issue by using a live MJPEG stream
-        stream_img = ft.Image(
-            src=f"{self.api.base}/camera/stream",
-            width=380,
-            height=300,
-            fit="cover",
-        )
         if not self.current_plan:
             try:
                 latest_plan = self.api.get_latest_plan(self.current_user["id"])
@@ -507,18 +497,6 @@ class FormaFixApp:
                    spacing=0, expand=True)),
             ], expand=True)
             self.page.update()
-        def stop_training(e):
-            self.api.camera_stop()
-            self.navigate("dashboard")
-
-        content = ft.Column([
-            ft.Text("Live Session", size=20, weight="bold"),
-            ft.Container(content=stream_img, border=ft.border.all(1, "grey")),
-            ft.ElevatedButton("Finish & Save", on_click=stop_training)
-        ], horizontal_alignment=ft.CrossAxisAlignment.CENTER)
-
-        self.main_container.content = content
-        self.page.update()
         def show_completion_screen():
             try:
                 plan_id = self.current_plan.get("id", 0)
@@ -595,7 +573,19 @@ class FormaFixApp:
         - Every 2nd frame is also POSTed to the backend for pose analysis
         """
         import threading
+        import os
+        import time
+
+        # Prefer stable camera backends on Windows and reduce noisy non-fatal OpenCV warnings.
+        os.environ.setdefault("OPENCV_VIDEOIO_PRIORITY_MSMF", "0")
         import cv2
+        try:
+            cv2.setLogLevel(2)  # ERROR and above
+        except Exception:
+            try:
+                cv2.utils.logging.setLogLevel(cv2.utils.logging.LOG_LEVEL_ERROR)
+            except Exception:
+                pass
 
         # ── UI controls ───────────────────────────────────────────────
         reps_text   = ft.Text("0", size=42, weight="bold", color="#4CAF50")
@@ -644,13 +634,60 @@ class FormaFixApp:
         # ── Camera capture + frame upload ─────────────────────────────
         def capture_and_send_frames():
             import base64
+
+            def open_camera():
+                # Probe several indices and backends; only accept if we can actually read frames.
+                backend_candidates = []
+                if hasattr(cv2, "CAP_DSHOW"):
+                    backend_candidates.append(("DSHOW", cv2.CAP_DSHOW))
+                if hasattr(cv2, "CAP_MSMF"):
+                    backend_candidates.append(("MSMF", cv2.CAP_MSMF))
+                backend_candidates.append(("ANY", cv2.CAP_ANY))
+
+                for cam_idx in range(0, 8):
+                    for backend_name, backend in backend_candidates:
+                        try:
+                            if backend == cv2.CAP_ANY:
+                                cam = cv2.VideoCapture(cam_idx)
+                            else:
+                                cam = cv2.VideoCapture(cam_idx, backend)
+                        except Exception:
+                            cam = None
+
+                        if cam is None or not cam.isOpened():
+                            if cam is not None:
+                                cam.release()
+                            continue
+
+                        try:
+                            cam.set(cv2.CAP_PROP_BUFFERSIZE, 1)
+                            cam.set(cv2.CAP_PROP_FRAME_WIDTH, 640)
+                            cam.set(cv2.CAP_PROP_FRAME_HEIGHT, 480)
+                        except Exception:
+                            pass
+
+                        got_frame = False
+                        for _ in range(12):
+                            ok, frame = cam.read()
+                            if ok and frame is not None and frame.size > 0:
+                                got_frame = True
+                                break
+                            time.sleep(0.03)
+
+                        if got_frame:
+                            status_text.value = f"🔴 Live (camera {cam_idx}, {backend_name})"
+                            status_text.update()
+                            return cam
+
+                        cam.release()
+
+                return None
+
             cap = None
             try:
-                cap = cv2.VideoCapture(0, cv2.CAP_DSHOW)
-                if not cap.isOpened():
-                    cap = cv2.VideoCapture(0)
-                if not cap.isOpened():
-                    status_text.value = "❌ Camera not found"
+                cap = open_camera()
+                if cap is None:
+                    status_text.value = "❌ Camera not found. Close Zoom/Teams and allow Camera access in Windows settings."
                     status_text.update()
                     return
 
@@ -658,15 +695,29 @@ class FormaFixApp:
                 for _ in range(8):
                     cap.read()
 
-                status_text.value = "🔴 Live"
-                status_text.update()
-
                 frame_count = 0
+                failed_reads = 0
                 while not camera_stop.is_set() and not finish_clicked[0]:
                     ok, frame = cap.read()
                     if not ok:
+                        failed_reads += 1
+                        # Camera backend can drop; reopen instead of spinning forever.
+                        if failed_reads >= 8:
+                            status_text.value = "Reconnecting camera..."
+                            status_text.update()
+                            try:
+                                cap.release()
+                            except Exception:
+                                pass
+                            cap = open_camera()
+                            failed_reads = 0
+                            if cap is None:
+                                status_text.value = "❌ Camera disconnected"
+                                status_text.update()
+                                return
                         camera_stop.wait(0.04)
                         continue
+                    failed_reads = 0
 
                     frame = cv2.flip(frame, 1)
                     frame = cv2.resize(frame, (480, 360))
