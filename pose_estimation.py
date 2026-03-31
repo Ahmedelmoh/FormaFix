@@ -20,7 +20,8 @@ model_path = 'pose_landmarker.task'
 if not os.path.exists(model_path):
     print("Downloading pose model...")
     urllib.request.urlretrieve(
-        'https://storage.googleapis.com/mediapipe-models/pose_landmarker/pose_landmarker_lite/float16/1/pose_landmarker_lite.task',
+        # 'https://storage.googleapis.com/mediapipe-models/pose_landmarker/pose_landmarker_lite/float16/1/pose_landmarker_lite.task',
+        'https://storage.googleapis.com/mediapipe-models/pose_landmarker/pose_landmarker_heavy/float16/1/pose_landmarker_heavy.task',
         model_path
     )
     print("Model downloaded!")
@@ -155,8 +156,93 @@ def run_pose_estimation(exercise_info):
 
     cap.release()
     cv2.destroyAllWindows()
+    
+def run_single_exercise(exercise_name: str, target_reps: int = 10) -> dict:
+    """
+    بتشغّل تمرين واحد وبترجع summary
+    بتتاستدعى من الـ server
+    """
+    joint_key = EXERCISE_JOINT.get(exercise_name, 'left_knee')
+    counter = RepCounter()
+    evaluator = FormEvaluator()
+    feedback_eng = FeedbackEngine()
+    audio_fb = AudioFeedback()
+
+    scores = []
+    cap = cv2.VideoCapture(0)
+
+    with PoseLandmarker.create_from_options(options) as landmarker:
+        while cap.isOpened():
+            ret, frame = cap.read()
+            if not ret:
+                break
+
+            h, w, _ = frame.shape
+            rgb_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+            mp_image = mp.Image(image_format=mp.ImageFormat.SRGB, data=rgb_frame)
+            results = landmarker.detect(mp_image)
+
+            if results.pose_landmarks:
+                landmarks = results.pose_landmarks[0]
+                angles = get_all_angles(landmarks, w, h)
+                current_angle = angles[joint_key]
+
+                reps, stage = counter.count(current_angle)
+                score, form_feedback = evaluator.evaluate(
+                    exercise_name, joint_key, current_angle
+                )
+                tip = feedback_eng.get_feedback(exercise_name, angles)
+                scores.append(score)
+
+                if score < 75:
+                    audio_fb.speak(tip)
+
+                # Draw skeleton
+                for start, end in CONNECTIONS:
+                    x1 = int(landmarks[start].x * w)
+                    y1 = int(landmarks[start].y * h)
+                    x2 = int(landmarks[end].x * w)
+                    y2 = int(landmarks[end].y * h)
+                    cv2.line(frame, (x1, y1), (x2, y2), (255, 255, 0), 2)
+
+                for lm in landmarks:
+                    cx, cy = int(lm.x * w), int(lm.y * h)
+                    cv2.circle(frame, (cx, cy), 5, (0, 255, 0), -1)
+
+                # Display
+                cv2.putText(frame, f'{exercise_name} | Reps: {reps}/{target_reps}',
+                           (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 255, 0), 2)
+                cv2.putText(frame, f'Score: {score}/100 | {form_feedback}',
+                           (10, 65), cv2.FONT_HERSHEY_SIMPLEX, 0.6, (255, 255, 0), 2)
+                cv2.putText(frame, tip,
+                           (10, 100), cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 165, 255), 2)
+                cv2.putText(frame, 'Q to skip',
+                           (10, h - 15), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (200, 200, 200), 1)
+
+                # انتهى لما وصل الـ target
+                if reps >= target_reps:
+                    break
+
+            cv2.imshow('FormaFix', frame)
+            if cv2.waitKey(10) & 0xFF == ord('q'):
+                break
+
+    cap.release()
+    cv2.destroyAllWindows()
+
+    return {
+        "exercise": exercise_name,
+        "reps_completed": counter.counter,
+        "target_reps": target_reps,
+        "avg_score": round(sum(scores) / len(scores)) if scores else 0,
+    }
 
 
 if __name__ == "__main__":
     exercise = select_exercise()
     run_pose_estimation(exercise)
+
+
+# if __name__ == "__main__":
+#     exercise = select_exercise()
+#     run_pose_estimation(exercise)
